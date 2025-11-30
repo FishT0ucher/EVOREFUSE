@@ -85,11 +85,13 @@ python visual/information_flow.py
 If you find this code or dataset useful, please cite our **NeurIPS 2025** paper:
 
 ```bibtex
-@inproceedings{wu2025evorefuse,
-  title     = {EVOREFUSE: Evolutionary Prompt Optimization for Evaluation and Mitigation of {LLM} Over-Refusal to Pseudo-Malicious Instructions},
-  author    = {Wu, Xiaorui and Li, Fei and Mao, Xiaofeng and Zhang, Xin and Zheng, Li and Peng, Yuxiang and Teng, Chong and Ji, Donghong and Li, Zhuang},
-  booktitle = {Advances in Neural Information Processing Systems (NeurIPS 2025)},
-  year      = {2025}
+@inproceedings{
+wu2025evorefuse,
+title={{EVOREFUSE}: Evolutionary Prompt Optimization for Evaluation and Mitigation of {LLM} Over-Refusal to Pseudo-Malicious Instructions},
+author={Xiaorui Wu and Fei Li and Xiaofeng Mao and Xin Zhang and Li Zheng and Yuxiang Peng and Chong Teng and Donghong Ji and Zhuang Li},
+booktitle={The Thirty-ninth Annual Conference on Neural Information Processing Systems},
+year={2025},
+url={https://openreview.net/forum?id=dbq6NZfi3c}
 }
 ```
 
