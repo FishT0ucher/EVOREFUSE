@@ -99,4 +99,6 @@ url={https://openreview.net/forum?id=dbq6NZfi3c}
 
 ### Acknowledgments
 
-This work was supported by Ant Group and Wuhan University Joint Research Program on Large Language Model Safety Alignment.
+The work of the authors affiliated with Wuhan University, Ant Group, and Ant International was supported by the Ant Group and Wuhan University Joint Research Program on Large Language Model Safety Alignment.
+
+**Clarification.** Zhuang Li served as the senior author and research lead for this publication. He did not receive funding from the above source; his contribution was academic, including conceptualisation, methodology, technical supervision, and manuscript development. The research was conducted as a publication-level academic collaboration.
