@@ -15,7 +15,7 @@ Ensure your environment is set up with the following dependencies. We recommend 
 python == 3.8.18
 
 # Core Dependencies
-numpy == 1.12.5
+numpy == 1.12.1
 transformers == 4.43.1
 ```
 
