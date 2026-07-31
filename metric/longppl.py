@@ -9,11 +9,9 @@ from torch.nn.utils.rnn import pad_sequence
 from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedModel, PreTrainedTokenizerBase
 
 
-
 ALPHA = -1e9
 BETA = -2.8
 TRUNC_LEN = 1
-
 
 SHORT_CONTEXT_BATCH_SIZE = 512
 
