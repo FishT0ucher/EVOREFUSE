@@ -27,12 +27,7 @@ attention_mask = inputs.attention_mask
 original_length = input_ids.shape[1]
 
 with torch.no_grad():
-    generated = model.generate(
-        input_ids,
-        max_new_tokens=20,
-        output_hidden_states=True,
-        return_dict_in_generate=True
-    )
+    generated = model.generate(input_ids, output_hidden_states=True, return_dict_in_generate=True, temperature=0.01)
 
 
 first_new_token_id = generated.sequences[0, original_length]

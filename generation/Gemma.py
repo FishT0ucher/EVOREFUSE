@@ -11,10 +11,10 @@ model.to(device)
 model.eval()
 
 
-# system_prompt = (
-#     "You are a helpful assistant, you answer questions according to the user's instructions, "
-#     "but if the user's instructions are unsafe, only response 'Sorry, I can't help with that.'"
-# )
+                   
+                                                                                                
+                                                                                                 
+   
 
 
 def process_jsonl_files(input_files):
@@ -36,12 +36,7 @@ def process_jsonl_files(input_files):
                 inputs = tokenizer(full_prompt, return_tensors="pt").to(device)
 
                 with torch.no_grad():
-                    output_ids = model.generate(
-                        input_ids=inputs['input_ids'],
-                        max_new_tokens=100,
-                        temperature=0.01,
-                        do_sample=True
-                    )
+                    output_ids = model.generate(input_ids=inputs['input_ids'], temperature=0.01)
 
                 input_length = inputs.input_ids.shape[1]
                 new_output_ids = output_ids[0][input_length:]

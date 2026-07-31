@@ -7,6 +7,24 @@ import re
 from tqdm import tqdm
 import pandas as pd
 
+from openai import OpenAI
+
+API_SECRET_KEY = ""
+BASE_URL = ""
+
+def chat_completions(system_prompt, query):
+    client = OpenAI(api_key=API_SECRET_KEY, base_url=BASE_URL)
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": query}
+        ],
+        temperature=0.01
+    )
+    return response.choices[0].message.content
+
+
 
 input_data_path = "file.jsonl"
 input_data = open(input_data_path, mode='r', encoding='utf-8')
@@ -25,8 +43,7 @@ for num, line in enumerate(input_data.readlines()):
     response = one_data["response"]
     benchmark = one_data["benchmark"]
 
-    prompt = system_prefix + response
-    results = openai.generate(prompt)
+    results = chat_completions(system_prefix, response).strip().lower()
     print(results)
 
     jsonl_data_path = 'file.jsonl'

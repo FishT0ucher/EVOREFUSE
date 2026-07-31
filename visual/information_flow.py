@@ -24,12 +24,7 @@ attention_mask = inputs.attention_mask
 original_length = input_ids.shape[1]
 
 with torch.no_grad():
-    generated = model.generate(
-        input_ids,
-        max_new_tokens=20,
-        output_hidden_states=True,
-        return_dict_in_generate=True
-    )
+    generated = model.generate(input_ids, output_hidden_states=True, return_dict_in_generate=True, temperature=0.01)
 
 embeddings = model.get_input_embeddings()
 input_embeds = embeddings(input_ids).detach().clone()
@@ -40,7 +35,7 @@ for name, module in model.named_modules():
     if 'self_attn' in name and 'layers.31' in name:
         first_attn_layer = module
         break
-assert first_attn_layer is not None,
+assert first_attn_layer is not None
 
 attn_weights = None
 def hook_fn(module, input, output):
@@ -70,9 +65,9 @@ loss.backward()
 
 if attn_weights is not None and attn_weights.grad is not None:
 
-    attn_grad = attn_weights.grad.to(torch.float32).squeeze(0)  # [num_heads, seq_len, seq_len]
-    attn_grad_avg = attn_grad.mean(dim=0)             # [seq_len, seq_len]
-    token_importance = attn_grad_avg.abs().mean(dim=1) # [seq_len]
+    attn_grad = attn_weights.grad.to(torch.float32).squeeze(0)                                 
+    attn_grad_avg = attn_grad.mean(dim=0)                                 
+    token_importance = attn_grad_avg.abs().mean(dim=1)            
     
 
     token_importance = token_importance.cpu().detach().numpy()

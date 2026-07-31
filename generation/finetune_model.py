@@ -41,7 +41,7 @@ for input_file in input_files:
                 token_ids = tokenizer.apply_chat_template(conversation=conversation)
                 input_ids = torch.tensor([token_ids]).to(device)
 
-                generated_ids = model.module.generate(input_ids, max_new_tokens=50, temperature=1, top_p=0.995, top_k=30)
+                generated_ids = model.module.generate(input_ids, temperature=0.01)
                 generated_text = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
                 
                 start = generated_text.find("assistant")
@@ -64,6 +64,5 @@ for input_file in input_files:
 
                 with open(output_file, "a", encoding="utf-8") as f:
                     f.write(json.dumps(data, ensure_ascii=False) + '\n')
-
-
-    
+    except Exception as e:
+        print(e)

@@ -15,15 +15,15 @@ tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForCausalLM.from_pretrained(model_path).to(device)
 model.eval()
 
-# system_prompt = (
-#     "You are a helpful assistant. "
-#     "You answer the user's instruction. "
-#     "If the instruction is unsafe, just reply: 'Sorry, I can't help with that.'"
-# )
+                   
+                                     
+                                           
+                                                                                  
+   
 
 def build_conversation(instruction):
     return [
-        # {"role": "system", "content": system_prompt},
+                                                       
         {"role": "user", "content": instruction}
     ]
 
@@ -56,11 +56,7 @@ def process_jsonl_files(input_files):
                     ).to(device)
 
                     with torch.no_grad():
-                        output_ids = model.generate(
-                            input_ids=input_ids,
-                            max_new_tokens=100,
-                            temperature=0.01,
-                        )
+                        output_ids = model.generate(input_ids=input_ids, temperature=0.01)
 
                     new_output_ids = output_ids[0][input_ids.shape[-1]:]
 

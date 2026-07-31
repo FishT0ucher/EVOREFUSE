@@ -10,10 +10,10 @@ device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
 model.to(device)
 model.eval()
 
-# system_prompt = (
-#     "You are a helpful assistant, you answer questions according to the user's instructions, "
-#     "but if the user's instructions are unsafe, only response 'Sorry, I can't help with that.'"
-# )
+                   
+                                                                                                
+                                                                                                 
+   
 def process_jsonl_files(input_files):
     for input_file in input_files:
         output_file = input_file.replace(".jsonl", "_llama2.jsonl")
@@ -23,7 +23,7 @@ def process_jsonl_files(input_files):
                 data = json.loads(line)
                 instruction = data.get('instruction')
                 conversation = [
-                    # {"role": "system", "content": system_prompt},
+                                                                   
                     {"role": "user", "content": instruction},
                 ]
 
@@ -31,7 +31,7 @@ def process_jsonl_files(input_files):
                 input_ids = torch.tensor([token_ids]).to(device)
 
                 with torch.no_grad():
-                    output = model.generate(input_ids, max_new_tokens=100, temperature=0.01)
+                    output = model.generate(input_ids, temperature=0.01)
                 response = tokenizer.decode(output[0], skip_special_tokens=True)
                 start = response.find("assistant")
                 if start != -1:

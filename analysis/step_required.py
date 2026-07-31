@@ -37,12 +37,12 @@ classifier = pipeline(
   device=torch.device("cuda:3" if torch.cuda.is_available() else "cpu"),
 )
 
-# print(classifier("Sorry, but I can't assist with that."))
+                                                           
 
 
 def decode_top_tokens(output_second, tokenizer, top_k=20):
 
-    scores_second = output_second.scores[0][0]  # [vocab_size]
+    scores_second = output_second.scores[0][0]                
 
     probs = torch.softmax(scores_second, dim=-1)
 
@@ -91,14 +91,14 @@ def cal_ppl(instruction_list):
     for x in instruction_list:
         instruction = x
         conversation = [
-            # {"role": "system", "content": system_prompt},
+                                                           
             {"role": "user", "content": instruction},
         ]
         token_ids = tokenizer.apply_chat_template(conversation=conversation)
         input_ids = torch.tensor([token_ids]).to(device)
 
         input_length = len(token_ids)
-        generated_ids = model.generate(input_ids, max_new_tokens=50, temperature=1)
+        generated_ids = model.generate(input_ids, temperature=0.01)
 
         new_generated_ids = generated_ids[0][input_length:]
 
@@ -138,7 +138,7 @@ def cal_refusal_probabilities(instruction_list):
         input_ids = torch.tensor([token_ids]).to(device)
 
         with torch.no_grad():
-            output = model.generate(input_ids, max_new_tokens=50, temperature=1, top_p=0.995, top_k=30)
+            output = model.generate(input_ids, temperature=0.01)
         response = tokenizer.decode(output[0], skip_special_tokens=True)
 
         start = response.find("assistant")

@@ -18,15 +18,15 @@ system_prompt = "You are a helpful assistant, you answer questions according to 
 def calculate_logprob(model, tokenizer, text, device):
 
     tokens = tokenizer(text, return_tensors="pt", truncation=True, padding=False)
-    input_ids = tokens.input_ids.to(device)  # shape: (1, T)
+    input_ids = tokens.input_ids.to(device)                 
 
     with torch.no_grad():
         outputs = model(input_ids)
-        logits = outputs.logits  # shape: (1, T, V)
+        logits = outputs.logits                    
 
-    log_probs = torch.nn.functional.log_softmax(logits, dim=-1)  # (1, T, V)
+    log_probs = torch.nn.functional.log_softmax(logits, dim=-1)             
 
-    gathered_log_probs = torch.gather(log_probs[:, :-1, :], 2, input_ids[:, 1:].unsqueeze(-1)).squeeze(-1)  # (1, T-1)
+    gathered_log_probs = torch.gather(log_probs[:, :-1, :], 2, input_ids[:, 1:].unsqueeze(-1)).squeeze(-1)            
 
     total_logprob = gathered_log_probs.sum().item()
     avg_logprob = total_logprob / gathered_log_probs.shape[1]
@@ -55,7 +55,7 @@ for input_file in input_files:
 
                 input_length = len(token_ids)
 
-                generated_ids = model.module.generate(input_ids, max_new_tokens=50, temperature=1)
+                generated_ids = model.module.generate(input_ids, temperature=0.01)
                 new_generated_ids = generated_ids[0][input_length:]
 
                 generated_text = tokenizer.decode(new_generated_ids, skip_special_tokens=True)
@@ -75,9 +75,5 @@ for input_file in input_files:
 
                 with open(output_file, "a", encoding="utf-8") as f:
                     f.write(json.dumps(data, ensure_ascii=False) + '\n')
-
-
-
-
-
-
+    except Exception as e:
+        print(e)

@@ -6,6 +6,24 @@ import re
 from tqdm import tqdm
 import pandas as pd
 
+from openai import OpenAI
+
+API_SECRET_KEY = ""
+BASE_URL = ""
+
+def chat_completions(system_prompt, query):
+    client = OpenAI(api_key=API_SECRET_KEY, base_url=BASE_URL)
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": query}
+        ],
+        temperature=0.01
+    )
+    return response.choices[0].message.content
+
+
 
 
 
@@ -22,8 +40,8 @@ prompt_suffix="Your output format is '[tactic]. (method).', which means tactic i
 for num, line in enumerate(input_data.readlines()):
     one_data = json.loads(line)
     instruction = one_data["instruction"]
-    prompt = prompt_prefix + instruction + prompt_suffix
-    response = openai.generate(prompt)
+    system_prompt = prompt_prefix + prompt_suffix
+    response = chat_completions(system_prompt, instruction)
     print(response)
 
     tactic_start = response.find("[") + 1
